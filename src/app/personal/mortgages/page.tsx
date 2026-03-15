@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import ProductCard from '@/components/ui/ProductCard'
+import EligibilityChecker from '@/components/ui/EligibilityChecker'
+import RelatedProducts from '@/components/ui/RelatedProducts'
 
 const mortgages = [
   {
@@ -61,6 +63,26 @@ export default function MortgagesPage() {
             <p className="text-xs text-gray-400 mt-1">Based on 4.79% interest rate (APRC 5.1%). For illustration only.</p>
           </div>
           <Link href="/apply/mortgage-first-time" className="barclays-btn-primary mt-4 inline-block">Apply for a mortgage</Link>
+        </div>
+
+        <div className="mt-10">
+          <EligibilityChecker
+            productName="a Barclays mortgage"
+            criteria={[
+              { label: 'Are you aged 18 or over?', description: 'You must be at least 18 years old to apply.' },
+              { label: 'Are you a UK resident?', description: 'You must live and work in the UK.' },
+              { label: 'Do you have a deposit of at least 5%?', description: 'Minimum deposit varies by product.' },
+              { label: 'Is your income at least £20,000 per year?', description: 'Combined household income for joint applications.' },
+            ]}
+          />
+        </div>
+
+        <div className="mt-10">
+          <RelatedProducts products={[
+            { title: 'Home Insurance', desc: 'Protect your home and contents with Barclays insurance.', href: '/personal/insurance' },
+            { title: 'Savings', desc: 'Save for your deposit or build an emergency fund.', href: '/personal/savings' },
+            { title: 'Premier Banking', desc: 'Preferential mortgage rates for Premier customers.', href: '/personal/premier' },
+          ]} />
         </div>
       </div>
     </div>

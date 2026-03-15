@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import ProductCard from '@/components/ui/ProductCard'
+import EligibilityChecker from '@/components/ui/EligibilityChecker'
+import RelatedProducts from '@/components/ui/RelatedProducts'
 
 const loans = [
   {
@@ -66,6 +68,26 @@ export default function LoansPage() {
           </div>
           <p className="text-xs text-gray-400 mt-3">Representative example: £10,000 over 3 years at 6.5% APR. For illustration only.</p>
           <Link href="/apply/personal-loan" className="barclays-btn-primary mt-4 inline-block">Apply for a loan</Link>
+        </div>
+
+        <div className="mt-10">
+          <EligibilityChecker
+            productName="a Barclays personal loan"
+            criteria={[
+              { label: 'Are you aged 18 or over?', description: 'You must be at least 18 years old to apply.' },
+              { label: 'Are you a UK resident?', description: 'You must live in the UK and have a UK address.' },
+              { label: 'Do you have a regular income?', description: 'You need a regular source of income to make repayments.' },
+              { label: 'Is your credit history in good standing?', description: 'No recent CCJs, IVAs, or bankruptcies.' },
+            ]}
+          />
+        </div>
+
+        <div className="mt-10">
+          <RelatedProducts products={[
+            { title: 'Credit Cards', desc: 'Spread the cost of purchases with 0% interest.', href: '/personal/credit-cards' },
+            { title: 'Mortgages', desc: 'Find the right mortgage for your home.', href: '/personal/mortgages' },
+            { title: 'Overdrafts', desc: 'Extra flexibility for your current account.', href: '/personal/overdrafts' },
+          ]} />
         </div>
       </div>
     </div>
