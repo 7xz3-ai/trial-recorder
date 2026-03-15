@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
-import { Menu, X, ChevronDown, User, LogOut } from 'lucide-react'
+import { Menu, X, ChevronDown, User, LogOut, Search } from 'lucide-react'
 import { getDemoUser, clearDemoUser, type DemoUser } from '@/lib/demo-auth'
 
 const personalNav = [
@@ -55,6 +55,16 @@ const personalNav = [
       { label: 'Cash ISA', href: '/personal/savings#isa' },
     ],
   },
+  {
+    label: 'Insurance',
+    href: '/personal/insurance',
+    children: [
+      { label: 'Home Insurance', href: '/personal/insurance#home' },
+      { label: 'Car Insurance', href: '/personal/insurance#car' },
+      { label: 'Life Insurance', href: '/personal/insurance#life' },
+      { label: 'Travel Insurance', href: '/personal/insurance#travel' },
+    ],
+  },
 ]
 
 const corporateNav = [
@@ -93,6 +103,8 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [openDropdown, setOpenDropdown] = useState<string | null>(null)
   const [user, setUser] = useState<DemoUser | null>(null)
+  const [searchOpen, setSearchOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
 
   const nav = isCorporate ? corporateNav : personalNav
 
@@ -146,7 +158,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href={isCorporate ? '/corporate' : '/'} className="flex items-center">
-            <Image src="/barclays-logo.svg" alt="Barclays" width={180} height={44} className="brightness-0 invert" />
+            <Image src="/barclays-logo.png" alt="Barclays" width={180} height={44} className="brightness-0 invert" />
           </Link>
 
           {/* Desktop nav */}
@@ -181,6 +193,15 @@ export default function Header() {
               </div>
             ))}
           </nav>
+
+          {/* Search button */}
+          <button
+            onClick={() => setSearchOpen(!searchOpen)}
+            className="text-white p-2 hover:text-barclays-teal transition-colors"
+            aria-label="Search"
+          >
+            <Search size={20} />
+          </button>
 
           {/* Mobile toggle */}
           <button
@@ -229,6 +250,57 @@ export default function Header() {
               <Link href="/auth/login" className="w-full barclays-btn-primary text-sm block" onClick={() => setMobileOpen(false)}>
                 Online Banking Login
               </Link>
+            )}
+          </div>
+        </div>
+      )}
+      {/* Search overlay */}
+      {searchOpen && (
+        <div className="bg-barclays-blue-light border-t border-blue-700">
+          <div className="max-w-4xl mx-auto px-4 py-6">
+            <div className="relative">
+              <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-blue-300" />
+              <input
+                type="text"
+                autoFocus
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                placeholder="Search Barclays... e.g. mortgages, credit cards, ISA"
+                className="w-full pl-12 pr-12 py-4 bg-white/10 border border-blue-500 rounded-xl text-white placeholder-blue-300 text-lg focus:outline-none focus:border-barclays-teal focus:bg-white/15"
+              />
+              <button onClick={() => { setSearchOpen(false); setSearchQuery('') }} className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-300 hover:text-white">
+                <X size={20} />
+              </button>
+            </div>
+            {searchQuery.length > 1 && (
+              <div className="mt-3 bg-white rounded-lg shadow-lg overflow-hidden">
+                {[
+                  { label: 'Current Accounts', href: '/personal/accounts' },
+                  { label: 'Mortgages', href: '/personal/mortgages' },
+                  { label: 'Credit Cards', href: '/personal/credit-cards' },
+                  { label: 'Personal Loans', href: '/personal/loans' },
+                  { label: 'Savings', href: '/personal/savings' },
+                  { label: 'Insurance', href: '/personal/insurance' },
+                  { label: 'Business Banking', href: '/corporate/banking' },
+                  { label: 'Blue Rewards', href: '/personal/blue-rewards' },
+                  { label: 'Branch Finder', href: '/branch-finder' },
+                  { label: 'Contact Us', href: '/contact' },
+                  { label: 'Fraud & Security', href: '/help/fraud' },
+                ].filter(r => r.label.toLowerCase().includes(searchQuery.toLowerCase())).slice(0, 5).map(r => (
+                  <Link
+                    key={r.label}
+                    href={r.href}
+                    onClick={() => { setSearchOpen(false); setSearchQuery('') }}
+                    className="block px-4 py-3 text-sm text-gray-700 hover:bg-barclays-gray-light hover:text-barclays-blue border-b border-gray-50 last:border-0"
+                  >
+                    <Search size={14} className="inline mr-2 text-gray-400" />
+                    {r.label}
+                  </Link>
+                ))}
+                {[].length === 0 && (
+                  <p className="px-4 py-3 text-sm text-gray-400">No results found</p>
+                )}
+              </div>
             )}
           </div>
         </div>

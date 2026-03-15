@@ -38,7 +38,7 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="inline-flex justify-center mb-4">
-            <Image src="/barclays-logo.svg" alt="Barclays" width={220} height={52} />
+            <Image src="/barclays-logo.png" alt="Barclays" width={220} height={52} />
           </div>
           <h1 className="text-2xl font-bold text-barclays-blue">Online Banking Login</h1>
           <p className="text-gray-500 text-sm mt-1">Sign in to manage your accounts</p>

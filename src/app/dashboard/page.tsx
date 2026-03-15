@@ -3,8 +3,9 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowDownLeft, ArrowUpRight, CreditCard, PiggyBank, Send, Settings, LogOut, Bell } from 'lucide-react'
+import { ArrowDownLeft, ArrowUpRight, CreditCard, PiggyBank, Send, Settings, LogOut, Bell, TrendingDown } from 'lucide-react'
 import { getDemoUser, clearDemoUser, DEMO_ACCOUNT, type DemoUser } from '@/lib/demo-auth'
+import { DashboardSkeleton } from '@/components/ui/Skeleton'
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
@@ -13,12 +14,14 @@ function formatDate(iso: string) {
 export default function DashboardPage() {
   const router = useRouter()
   const [user, setUser] = useState<DemoUser | null>(null)
-  const [activeTab, setActiveTab] = useState<'overview' | 'transactions' | 'cards'>('overview')
+  const [activeTab, setActiveTab] = useState<'overview' | 'transactions' | 'cards' | 'insights'>('overview')
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const u = getDemoUser()
     if (!u) { router.push('/auth/login'); return }
     setUser(u)
+    setTimeout(() => setLoading(false), 1200)
   }, [router])
 
   const handleLogout = () => {
@@ -26,9 +29,14 @@ export default function DashboardPage() {
     router.push('/')
   }
 
-  if (!user) return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-barclays-blue font-semibold animate-pulse">Loading...</div>
+  if (!user || loading) return (
+    <div className="min-h-screen bg-barclays-gray-light">
+      <div className="bg-barclays-blue text-white">
+        <div className="max-w-6xl mx-auto px-4 py-4">
+          <div className="h-5 w-48 bg-blue-400/30 rounded animate-pulse" />
+        </div>
+      </div>
+      <DashboardSkeleton />
     </div>
   )
 
@@ -57,7 +65,7 @@ export default function DashboardPage() {
 
         {/* Tabs */}
         <div className="max-w-6xl mx-auto px-4 flex gap-0 border-t border-blue-700 mt-2">
-          {([['overview', 'Overview'], ['transactions', 'Transactions'], ['cards', 'Cards']] as const).map(([tab, label]) => (
+          {([['overview', 'Overview'], ['transactions', 'Transactions'], ['cards', 'Cards'], ['insights', 'Spending Insights']] as const).map(([tab, label]) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
@@ -255,6 +263,98 @@ export default function DashboardPage() {
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Insights tab */}
+        {activeTab === 'insights' && (
+          <div className="space-y-6">
+            {/* Monthly summary */}
+            <div className="bg-white rounded-xl p-6 shadow border border-gray-100">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="font-bold text-barclays-blue text-lg">March 2026 — Spending breakdown</h2>
+                <select className="border border-gray-200 rounded px-3 py-1.5 text-sm focus:outline-none focus:border-barclays-teal">
+                  <option>March 2026</option>
+                  <option>February 2026</option>
+                  <option>January 2026</option>
+                </select>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-4 mb-8">
+                {[
+                  { label: 'Total spent', value: '£1,298.61', color: 'text-red-600' },
+                  { label: 'Total income', value: '£3,450.00', color: 'text-green-600' },
+                  { label: 'Net savings', value: '£2,151.39', color: 'text-barclays-teal' },
+                ].map(s => (
+                  <div key={s.label} className="bg-barclays-gray-light rounded-lg p-4 text-center">
+                    <p className="text-xs text-gray-500 mb-1">{s.label}</p>
+                    <p className={`text-2xl font-bold ${s.color}`}>{s.value}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Category bars */}
+              <h3 className="font-semibold text-barclays-blue mb-4">Spending by category</h3>
+              <div className="space-y-4">
+                {[
+                  { cat: 'Groceries', amount: 405.63, pct: 31, color: 'bg-blue-500' },
+                  { cat: 'Bills & Subscriptions', amount: 262.99, pct: 20, color: 'bg-barclays-teal' },
+                  { cat: 'Shopping', amount: 229.99, pct: 18, color: 'bg-purple-500' },
+                  { cat: 'Transport', amount: 148.00, pct: 11, color: 'bg-orange-500' },
+                  { cat: 'Eating Out', amount: 132.00, pct: 10, color: 'bg-pink-500' },
+                  { cat: 'Cash & ATM', amount: 100.00, pct: 8, color: 'bg-gray-500' },
+                  { cat: 'Other', amount: 20.00, pct: 2, color: 'bg-gray-300' },
+                ].map(c => (
+                  <div key={c.cat}>
+                    <div className="flex items-center justify-between mb-1">
+                      <div className="flex items-center gap-2">
+                        <div className={`w-3 h-3 rounded-full ${c.color}`} />
+                        <span className="text-sm text-gray-700">{c.cat}</span>
+                      </div>
+                      <span className="text-sm font-semibold text-gray-800">£{c.amount.toFixed(2)}</span>
+                    </div>
+                    <div className="w-full bg-gray-100 rounded-full h-2.5">
+                      <div className={`h-2.5 rounded-full ${c.color} transition-all duration-700`} style={{ width: `${c.pct}%` }} />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Spending vs last month */}
+            <div className="bg-white rounded-xl p-6 shadow border border-gray-100">
+              <h3 className="font-bold text-barclays-blue mb-4">Compared to last month</h3>
+              <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  { cat: 'Groceries', change: -12, direction: 'down' },
+                  { cat: 'Bills', change: 0, direction: 'same' },
+                  { cat: 'Shopping', change: 23, direction: 'up' },
+                  { cat: 'Eating Out', change: -8, direction: 'down' },
+                ].map(c => (
+                  <div key={c.cat} className="bg-barclays-gray-light rounded-lg p-4 text-center">
+                    <p className="text-xs text-gray-500 mb-1">{c.cat}</p>
+                    <p className={`text-lg font-bold ${c.change > 0 ? 'text-red-500' : c.change < 0 ? 'text-green-600' : 'text-gray-500'}`}>
+                      {c.change > 0 ? '+' : ''}{c.change}%
+                    </p>
+                    <p className="text-xs text-gray-400 mt-1">
+                      {c.change > 0 ? 'Spending up' : c.change < 0 ? 'Spending down' : 'No change'}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Tip */}
+            <div className="bg-barclays-teal/10 border border-barclays-teal/30 rounded-xl p-6 flex items-start gap-4">
+              <TrendingDown className="text-barclays-teal w-8 h-8 flex-shrink-0 mt-1" />
+              <div>
+                <h3 className="font-bold text-barclays-blue mb-1">Spending insight</h3>
+                <p className="text-sm text-gray-600">
+                  Your grocery spending is down 12% this month — great job! Your shopping spend has increased by 23% though.
+                  Consider setting a spending limit in the Barclays app to stay on track.
+                </p>
               </div>
             </div>
           </div>

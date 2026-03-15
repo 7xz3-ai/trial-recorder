@@ -47,7 +47,7 @@ export default function RegisterPage() {
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex justify-center mb-4">
-            <Image src="/barclays-logo.svg" alt="Barclays" width={200} height={48} />
+            <Image src="/barclays-logo.png" alt="Barclays" width={200} height={48} />
           </Link>
           <h1 className="text-2xl font-bold text-barclays-blue">Register for Online Banking</h1>
           <p className="text-gray-500 text-sm mt-1">Create your account in minutes</p>
