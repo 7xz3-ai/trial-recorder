@@ -35,7 +35,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 py-12">
         {/* Footer logo */}
         <div className="mb-8">
-          <Image src="/barclays-logo.png" alt="Barclays" width={160} height={38} className="brightness-0 invert opacity-70" />
+          <Image src="/barclays-logo.png" alt="Barclays" width={160} height={38} className="mix-blend-screen opacity-90" />
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
           {Object.entries(footerLinks).map(([category, links]) => (

@@ -158,7 +158,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href={isCorporate ? '/corporate' : '/'} className="flex items-center">
-            <Image src="/barclays-logo.png" alt="Barclays" width={180} height={44} className="brightness-0 invert" />
+            <Image src="/barclays-logo.png" alt="Barclays" width={180} height={44} className="mix-blend-screen" />
           </Link>
 
           {/* Desktop nav */}
