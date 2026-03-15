@@ -145,9 +145,8 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href={isCorporate ? '/corporate' : '/'} className="flex items-center gap-3">
-            <Image src="/barclays-eagle.svg" alt="Barclays" width={38} height={42} className="brightness-0 invert" />
-            <span className="text-white font-bold text-xl tracking-wide">Barclays</span>
+          <Link href={isCorporate ? '/corporate' : '/'} className="flex items-center">
+            <Image src="/barclays-logo.svg" alt="Barclays" width={180} height={44} className="brightness-0 invert" />
           </Link>
 
           {/* Desktop nav */}

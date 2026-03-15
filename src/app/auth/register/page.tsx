@@ -46,11 +46,8 @@ export default function RegisterPage() {
     <div className="min-h-screen bg-barclays-gray-light flex items-center justify-center py-12 px-4">
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-2 mb-4">
-            <div className="w-10 h-10 bg-barclays-blue rounded-xl flex items-center justify-center p-1.5">
-              <Image src="/barclays-eagle.svg" alt="Barclays" width={28} height={32} className="brightness-0 invert" />
-            </div>
-            <span className="text-barclays-blue font-bold text-xl">Barclays</span>
+          <Link href="/" className="inline-flex justify-center mb-4">
+            <Image src="/barclays-logo.svg" alt="Barclays" width={200} height={48} />
           </Link>
           <h1 className="text-2xl font-bold text-barclays-blue">Register for Online Banking</h1>
           <p className="text-gray-500 text-sm mt-1">Create your account in minutes</p>
