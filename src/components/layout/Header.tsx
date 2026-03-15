@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { Menu, X, ChevronDown, User, LogOut } from 'lucide-react'
 import { getDemoUser, clearDemoUser, type DemoUser } from '@/lib/demo-auth'
@@ -145,16 +146,8 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link href={isCorporate ? '/corporate' : '/'} className="flex items-center gap-3">
-            <div className="flex items-center">
-              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="40" height="40" rx="4" fill="#00AEEF"/>
-                <path d="M20 6L26 14H14L20 6Z" fill="white"/>
-                <path d="M20 34L14 26H26L20 34Z" fill="white"/>
-                <path d="M6 20L14 14V26L6 20Z" fill="white"/>
-                <path d="M34 20L26 26V14L34 20Z" fill="white"/>
-              </svg>
-              <span className="ml-2 text-white font-bold text-xl tracking-wide">Barclays</span>
-            </div>
+            <Image src="/barclays-eagle.svg" alt="Barclays" width={38} height={42} className="brightness-0 invert" />
+            <span className="text-white font-bold text-xl tracking-wide">Barclays</span>
           </Link>
 
           {/* Desktop nav */}

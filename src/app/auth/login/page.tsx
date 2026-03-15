@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { Eye, EyeOff, Lock, Mail, AlertCircle } from 'lucide-react'
 import { demoLogin, setDemoUser } from '@/lib/demo-auth'
@@ -37,13 +38,8 @@ export default function LoginPage() {
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center gap-3 mb-4">
-            <div className="w-12 h-12 bg-barclays-blue rounded-lg flex items-center justify-center">
-              <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
-                <path d="M20 6L26 14H14L20 6Z" fill="#00AEEF"/>
-                <path d="M20 34L14 26H26L20 34Z" fill="#00AEEF"/>
-                <path d="M6 20L14 14V26L6 20Z" fill="#00AEEF"/>
-                <path d="M34 20L26 26V14L34 20Z" fill="#00AEEF"/>
-              </svg>
+            <div className="w-12 h-12 bg-barclays-blue rounded-xl flex items-center justify-center p-2">
+              <Image src="/barclays-eagle.svg" alt="Barclays" width={32} height={36} className="brightness-0 invert" />
             </div>
             <span className="text-barclays-blue font-bold text-2xl">Barclays</span>
           </div>

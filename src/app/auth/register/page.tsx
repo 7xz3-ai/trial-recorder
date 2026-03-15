@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react'
 import { setDemoUser } from '@/lib/demo-auth'
@@ -46,13 +47,8 @@ export default function RegisterPage() {
       <div className="max-w-md w-full">
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2 mb-4">
-            <div className="w-10 h-10 bg-barclays-blue rounded-lg flex items-center justify-center">
-              <svg width="24" height="24" viewBox="0 0 40 40" fill="none">
-                <path d="M20 6L26 14H14L20 6Z" fill="#00AEEF"/>
-                <path d="M20 34L14 26H26L20 34Z" fill="#00AEEF"/>
-                <path d="M6 20L14 14V26L6 20Z" fill="#00AEEF"/>
-                <path d="M34 20L26 26V14L34 20Z" fill="#00AEEF"/>
-              </svg>
+            <div className="w-10 h-10 bg-barclays-blue rounded-xl flex items-center justify-center p-1.5">
+              <Image src="/barclays-eagle.svg" alt="Barclays" width={28} height={32} className="brightness-0 invert" />
             </div>
             <span className="text-barclays-blue font-bold text-xl">Barclays</span>
           </Link>

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 const footerLinks = {
   'Personal Banking': [
@@ -32,6 +33,11 @@ export default function Footer() {
   return (
     <footer className="bg-barclays-blue text-white mt-auto">
       <div className="max-w-7xl mx-auto px-4 py-12">
+        {/* Footer logo */}
+        <div className="flex items-center gap-3 mb-8">
+          <Image src="/barclays-eagle.svg" alt="Barclays" width={32} height={36} className="brightness-0 invert opacity-80" />
+          <span className="text-white font-bold text-lg tracking-wide opacity-80">Barclays</span>
+        </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-10">
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
