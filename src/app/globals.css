@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff;
+  --foreground: #1A1A1A;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@layer components {
+  .barclays-btn-primary {
+    @apply bg-barclays-teal text-white font-semibold px-6 py-3 rounded hover:bg-barclays-teal-dark transition-colors duration-200 inline-block text-center;
+  }
+  .barclays-btn-secondary {
+    @apply bg-white text-barclays-blue font-semibold px-6 py-3 rounded border-2 border-barclays-blue hover:bg-barclays-gray-light transition-colors duration-200 inline-block text-center;
+  }
+  .barclays-btn-outline-white {
+    @apply bg-transparent text-white font-semibold px-6 py-3 rounded border-2 border-white hover:bg-white hover:text-barclays-blue transition-colors duration-200 inline-block text-center;
+  }
+  .card-hover {
+    @apply hover:shadow-lg transition-shadow duration-200;
+  }
+}
