@@ -1,5 +1,21 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## Trial Recorder (`/recorder`)
+
+A screen recorder for capturing build errors on video instead of typing them up. Open
+[http://localhost:3000/recorder](http://localhost:3000/recorder) (screen capture requires
+localhost or HTTPS) and:
+
+1. **Start recording** — pick the screen, window, or terminal where your build is running.
+   Toggle mic narration on/off before starting; sharing a Chrome/Edge tab can also capture tab audio.
+2. **Mark errors** — when a failure appears on screen, type a note and hit *Mark error* to drop a
+   timestamped marker.
+3. **Stop & save** — preview the recording, rename it, copy the error timestamps, and download it
+   as a `.webm` to attach to an issue or chat message.
+
+Everything runs client-side with `getDisplayMedia` + `MediaRecorder` — recordings never leave your
+machine and disappear when you close the tab unless downloaded.
+
 ## Getting Started
 
 First, run the development server:
